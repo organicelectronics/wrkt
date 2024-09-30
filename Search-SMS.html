@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Text Formatter</title>
+    <style>
+        /* CSS for visited and unvisited links */
+        a:link {
+            color: blue; /* Unvisited links */
+        }
+        a:visited {
+            color: red; /* Visited links */
+        }
+    </style>
 </head>
 <body>
 
@@ -28,8 +37,8 @@
 <h3>Format 4 <button onclick="openAllLinks('outputFormat4')">Open All</button></h3>
 <div id="outputFormat4"></div>
 
-<h3>Format 5 (SMS Link) <button onclick="openAllLinks('outputFormat5')">Open All</button></h3>
-<div id="outputFormat5"></div>
+<h3>SMS Links (Help, Info, Stop, Aide, Arret)</h3>
+<div id="outputSMS"></div>
 
 <script>
     function normalizeSpaces(str) {
@@ -45,7 +54,7 @@
         for (let i = 0; i < links.length; i++) {
             setTimeout(() => {
                 window.open(links[i].href, '_blank');
-            }, i * 3000); // Increased delay to 3 seconds for more processing
+            }, i * 3000); // Delay of 3 seconds for opening each link
         }
     }
 
@@ -59,7 +68,7 @@
         document.getElementById('outputFormat2').innerHTML = '';
         document.getElementById('outputFormat3').innerHTML = '';
         document.getElementById('outputFormat4').innerHTML = '';
-        document.getElementById('outputFormat5').innerHTML = '';
+        document.getElementById('outputSMS').innerHTML = '';
 
         // Process each line
         lines.forEach(line => {
@@ -73,7 +82,7 @@
             // Encode the text part for use in URLs
             let encodedText = encodeURIComponent(text);
 
-            // Create the URLs with %22 around the number and escaped text
+            // Create the URLs
 
             // Format 1: Google search with text "to {number}"
             let link1 = `https://www.google.com/search?q=text+%22to+${number}%22`;
@@ -91,9 +100,15 @@
             let link4 = `https://www.google.ca/search?q=%22${number}%22+${encodedText}&cr=countryCA`;
             document.getElementById('outputFormat4').innerHTML += `<a href="${link4}" target="_blank">${number} ${text}</a><br>`;
 
-            // Format 5: SMS link to send "Help" to the number
-            let link5 = `sms:${number}?body=Help`;
-            document.getElementById('outputFormat5').innerHTML += `<a href="${link5}" target="_blank">Send Help to ${number}</a><br>`;
+            // SMS Links for Help, Info, Stop, Aide, Arret
+            let smsLinks = `
+                <a href="sms:${number}?body=Help" target="_blank">Send Help to ${number}</a><br>
+                <a href="sms:${number}?body=Info" target="_blank">Send Info to ${number}</a><br>
+                <a href="sms:${number}?body=Stop" target="_blank">Send Stop to ${number}</a><br>
+                <a href="sms:${number}?body=Aide" target="_blank">Send Aide to ${number}</a><br>
+                <a href="sms:${number}?body=Arret" target="_blank">Send Arret to ${number}</a><br>
+            `;
+            document.getElementById('outputSMS').innerHTML += smsLinks;
         });
     }
 </script>
