@@ -38,7 +38,11 @@
 <div id="outputFormat4"></div>
 
 <h3>SMS Links (Help, Info, Stop, Aide, Arret)</h3>
-<div id="outputSMS"></div>
+<div id="outputSMSHelp"></div>
+<div id="outputSMSInfo"></div>
+<div id="outputSMSStop"></div>
+<div id="outputSMSAide"></div>
+<div id="outputSMSArret"></div>
 
 <script>
     function normalizeSpaces(str) {
@@ -68,7 +72,11 @@
         document.getElementById('outputFormat2').innerHTML = '';
         document.getElementById('outputFormat3').innerHTML = '';
         document.getElementById('outputFormat4').innerHTML = '';
-        document.getElementById('outputSMS').innerHTML = '';
+        document.getElementById('outputSMSHelp').innerHTML = '';
+        document.getElementById('outputSMSInfo').innerHTML = '';
+        document.getElementById('outputSMSStop').innerHTML = '';
+        document.getElementById('outputSMSAide').innerHTML = '';
+        document.getElementById('outputSMSArret').innerHTML = '';
 
         // Process each line
         lines.forEach(line => {
@@ -77,38 +85,13 @@
 
             let parts = line.trim().split(' ');
             let number = parts[0];  // Extract the number part
-            let text = parts.slice(1).join(' ');  // Extract the text part (remaining words)
 
-            // Encode the text part for use in URLs
-            let encodedText = encodeURIComponent(text);
-
-            // Create the URLs
-
-            // Format 1: Google search with text "to {number}"
-            let link1 = `https://www.google.com/search?q=text+%22to+${number}%22`;
-            document.getElementById('outputFormat1').innerHTML += `<a href="${link1}" target="_blank">${number} ${text}</a><br>`;
-
-            // Format 2: Google.ca search with text "to {number}" and country restriction
-            let link2 = `https://www.google.ca/search?q=text+%22to+${number}%22&cr=countryCA`;
-            document.getElementById('outputFormat2').innerHTML += `<a href="${link2}" target="_blank">${number} ${text}</a><br>`;
-
-            // Format 3: Google search with "{number}" + text
-            let link3 = `https://www.google.com/search?q=%22${number}%22+${encodedText}`;
-            document.getElementById('outputFormat3').innerHTML += `<a href="${link3}" target="_blank">${number} ${text}</a><br>`;
-
-            // Format 4: Google.ca search with "{number}" + text and country restriction
-            let link4 = `https://www.google.ca/search?q=%22${number}%22+${encodedText}&cr=countryCA`;
-            document.getElementById('outputFormat4').innerHTML += `<a href="${link4}" target="_blank">${number} ${text}</a><br>`;
-
-            // SMS Links for Help, Info, Stop, Aide, Arret
-            let smsLinks = `
-                <a href="sms:${number}?body=Help" target="_blank">Send Help to ${number}</a><br>
-                <a href="sms:${number}?body=Info" target="_blank">Send Info to ${number}</a><br>
-                <a href="sms:${number}?body=Stop" target="_blank">Send Stop to ${number}</a><br>
-                <a href="sms:${number}?body=Aide" target="_blank">Send Aide to ${number}</a><br>
-                <a href="sms:${number}?body=Arret" target="_blank">Send Arret to ${number}</a><br>
-            `;
-            document.getElementById('outputSMS').innerHTML += smsLinks;
+            // Create SMS Links for each type
+            document.getElementById('outputSMSHelp').innerHTML += `<a href="sms:${number}?body=Help" target="_blank">Send Help to ${number}</a><br>`;
+            document.getElementById('outputSMSInfo').innerHTML += `<a href="sms:${number}?body=Info" target="_blank">Send Info to ${number}</a><br>`;
+            document.getElementById('outputSMSStop').innerHTML += `<a href="sms:${number}?body=Stop" target="_blank">Send Stop to ${number}</a><br>`;
+            document.getElementById('outputSMSAide').innerHTML += `<a href="sms:${number}?body=Aide" target="_blank">Send Aide to ${number}</a><br>`;
+            document.getElementById('outputSMSArret').innerHTML += `<a href="sms:${number}?body=Arret" target="_blank">Send Arret to ${number}</a><br>`;
         });
     }
 </script>
